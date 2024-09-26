@@ -28,7 +28,8 @@ class _MyTextFildState extends State<MyTextFild> {
       child: TextField(
         onChanged: widget.press,
         style: const TextStyle(color: Colors.white),
-        obscureText: _isObscured, // Parol yashirin yoki ochiq bo'lishi
+        obscureText: widget.obscureText &&
+            _isObscured, // Parol yashirin yoki ochiq bo'lishi
         keyboardAppearance: Brightness.dark,
         keyboardType: widget.textInputType,
         cursorColor: Colors.white,

@@ -1,10 +1,8 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:modul8app_1/firebase_options.dart';
+import 'package:modul8app_1/forger_password.dart';
 import 'package:modul8app_1/widget.dart';
 
 void main() async {
@@ -147,16 +145,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     const Spacer(),
-                    Container(),
                     TextButton(
                       onPressed: () {
                         setState(() {
                           login = false;
                         });
                       },
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ForgerPassword()));
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
                       ),
                     )
                   ],
@@ -283,14 +288,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SocialMediaIcon(
+                      press: () {},
                       image: "images/google icon.png",
                       apple: false,
                     ),
                     SocialMediaIcon(
+                      press: () {},
                       image: "images/fasebook.png",
                       apple: false,
                     ),
                     SocialMediaIcon(
+                      press: () {},
                       image: "images/apple.png",
                       apple: true,
                     ),
@@ -308,22 +316,30 @@ class _LoginScreenState extends State<LoginScreen> {
 class SocialMediaIcon extends StatelessWidget {
   final String image;
   final bool apple;
+  VoidCallback press;
 
-  const SocialMediaIcon({super.key, required this.image, required this.apple});
+  SocialMediaIcon(
+      {super.key,
+      required this.image,
+      required this.apple,
+      required this.press});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * .08,
-      width: MediaQuery.of(context).size.width * .27,
-      decoration: BoxDecoration(
-        border: Border.all(width: 0.4, color: Colors.white.withOpacity(.7)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Image.asset(
-          image,
-          color: apple ? Colors.white : null,
+    return GestureDetector(
+      onTap: press,
+      child: Container(
+        height: MediaQuery.of(context).size.height * .08,
+        width: MediaQuery.of(context).size.width * .27,
+        decoration: BoxDecoration(
+          border: Border.all(width: 0.4, color: Colors.white.withOpacity(.7)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Image.asset(
+            image,
+            color: apple ? Colors.white : null,
+          ),
         ),
       ),
     );
