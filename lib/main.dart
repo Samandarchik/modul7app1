@@ -91,13 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                       color: Colors.white.withOpacity(.7), fontSize: 18),
                 ),
-                if (!passwordpage)
-                  MyTextFild(
-                    obscureText: false,
-                    text: '',
-                    textInputType: TextInputType.emailAddress,
-                    press: (p0) {},
-                  ),
                 if (!login)
                   MyTextFild(
                     press: (p0) {},
