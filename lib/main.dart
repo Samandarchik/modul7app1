@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:modul8app_1/firebase_options.dart';
 import 'package:modul8app_1/forger_password.dart';
 import 'package:modul8app_1/widget.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+const List<String> scopes = <String>[
+  'email',
+  'https://www.googleapis.com/auth/contacts.readonly',
+];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +51,17 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: scopes,
+);
+Future<void> _handleSignIn() async {
+  try {
+    await _googleSignIn.signIn();
+  } catch (error) {
+    print(error);
+  }
+}
+
 class _LoginScreenState extends State<LoginScreen> {
   static bool checkbox = false;
   static bool login = false;
@@ -57,10 +74,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -161,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Center(
                   child: isLoading
-                      ? SizedBox(
+                      ? const SizedBox(
                           height: 100,
                           child: CircularProgressIndicator.adaptive(
                             backgroundColor: Colors.white,
@@ -281,7 +298,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SocialMediaIcon(
-                      press: () {},
+                      press: () {
+                        _handleSignIn();
+                      },
                       image: "images/google icon.png",
                       apple: false,
                     ),
